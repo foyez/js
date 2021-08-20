@@ -335,7 +335,7 @@ __Response methods__
 - text() - In this case it resolves with a string.
 - json() - Lastly we have the method to that resolves the promise with JSON (JavaScript Object Notation is a lightweight data-interchange format, that uses human-readable text to store and transmit data objects consisting of attribute–value pairs and array data types. It is easy for machines to parse and generate).
 
-POST, PUT, PATCH and DELETE request
+Fetch api wrapper function
 
 ```js
 const isObject = val => typeof val === 'object' && val !== null && !Array.isArray(val)
@@ -346,7 +346,7 @@ const isObject = val => typeof val === 'object' && val !== null && !Array.isArra
  * @param {string} methodName request method name
  * @param {string} data send data to server; datatype of data depends on api
  */
-const apiCall = async (url, methodName, data = null) => {
+const apiCall = async (url, methodName = 'GET', data = null) => {
   const fetchData = {
     method: methodName,
     ...isObject(data) && { body: JSON.stringify(data) }, // add body property if data is an object
