@@ -15,7 +15,8 @@
 0 ?? "other" // 0
 undefined ?? "other" // "other"
 
-// ?. - like the . chaining operator, except that instead of causing an error if a reference is nullish (null or undefined), it returns undefined
+// ?. - like the . chaining operator, except that instead of causing an error if a reference is nullish (null or undefined),
+// it returns undefined
 const obj = { lang: "js" };
 obj.lang?.toUpperCase // "JS"
 obj.framework?.toUpperCase // undefined
