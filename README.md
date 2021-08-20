@@ -347,7 +347,7 @@ POST, PUT, PATCH and DELETE request
 const handleRequest = async (url, methodName, data = null) => {
   const fetchData = {
     method: methodName,
-    ...data && { body: JSON.stringify(data) },
+    ...data && { body: JSON.stringify(data) }, // add body property if data is not falsy
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
     },
