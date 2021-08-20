@@ -344,10 +344,10 @@ POST, PUT, PATCH and DELETE request
  * @param {string} methodName request method name
  * @param {string} data send data to server; datatype of data depends on api
  */
-const handleRequest = async (url, methodName, data = "") => {
+const handleRequest = async (url, methodName, data = null) => {
   const fetchData = {
     method: methodName,
-    body: JSON.stringify(data),
+    ...data && { body: JSON.stringify(data) },
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
     },
