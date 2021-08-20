@@ -305,9 +305,13 @@ longerSummary.apply(book, ['dystopian', 1932]) // "Brave New World was written b
 
 ## Fetch api
 
+<details>
+<summary>View contents</summary>
+
 GET request (default)
 
 ```js
+const url = "https://jsonplaceholder.typicode/users/1"
 fetch(url) // call the fetch function passing the url of the API as a parameter
   .then(response => { // here we get a response (data) is an object with a series of methods
     return response.json() // Transform the data into json
@@ -367,3 +371,5 @@ const data = {
 
 handleRequest("https://jsonplaceholder.typicode.com/posts", "POST", data)
 ```
+
+</details>
