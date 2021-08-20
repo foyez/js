@@ -347,7 +347,7 @@ POST, PUT, PATCH and DELETE request
 const handleRequest = async (url, methodName, data = null) => {
   const fetchData = {
     method: methodName,
-    ...data && { body: JSON.stringify(data) }, // add body property if data is not falsy
+    ...isObject(data) && { body: JSON.stringify(data) }, // add body property if data is a object
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
     },
@@ -356,12 +356,14 @@ const handleRequest = async (url, methodName, data = null) => {
   try {
     // Handle response you get from the server
     const data = await (await fetch(url, fetchData)).json()
-    console.log(data)
+    return [data, null]
   } catch (err) {
     // Handle errors you get from the server
-    console.log(err)
+    return [null, err]
   }
 }
+  
+const isObject = val => typeof val === 'object' && val !== null && !Array.isArray(val)
 
 const data = {
   title: "foo",
@@ -369,7 +371,13 @@ const data = {
   userId: 1,
 }
 
-handleRequest("https://jsonplaceholder.typicode.com/posts", "POST", data)
+const [data, err] = await handleRequest("https://jsonplaceholder.typicode.com/posts", "POST", data)
+  
+if (err !== null) {
+  // handle errors
+}
+  
+console.log(data)
 ```
 
 </details>
