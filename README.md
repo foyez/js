@@ -338,16 +338,18 @@ __Response methods__
 POST, PUT, PATCH and DELETE request
 
 ```js
+const isObject = val => typeof val === 'object' && val !== null && !Array.isArray(val)
+  
 /**
  * handle server request using fetch api
  * @param {string} url name of the api url
  * @param {string} methodName request method name
  * @param {string} data send data to server; datatype of data depends on api
  */
-const handleRequest = async (url, methodName, data = null) => {
+const apiCall = async (url, methodName, data = null) => {
   const fetchData = {
     method: methodName,
-    ...isObject(data) && { body: JSON.stringify(data) }, // add body property if data is a object
+    ...isObject(data) && { body: JSON.stringify(data) }, // add body property if data is an object
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
     },
@@ -362,16 +364,9 @@ const handleRequest = async (url, methodName, data = null) => {
     return [null, err]
   }
 }
-  
-const isObject = val => typeof val === 'object' && val !== null && !Array.isArray(val)
 
-const data = {
-  title: "foo",
-  body: "bar",
-  userId: 1,
-}
-
-const [data, err] = await handleRequest("https://jsonplaceholder.typicode.com/posts", "POST", data)
+const data = { title: "foo", body: "bar", userId: 1 }
+const [data, err] = await apiCall("https://jsonplaceholder.typicode.com/posts", "POST", data)
   
 if (err !== null) {
   // handle errors
