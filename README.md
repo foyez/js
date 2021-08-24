@@ -303,6 +303,240 @@ longerSummary.apply(book, ['dystopian', 1932]) // "Brave New World was written b
   
 </details>
 
+## Destructuring
+
+<details>
+<summary>View contents</summary>
+
+`Destructuring is used to create varibles from array items or object properties.`
+
+## `Object Destructuring`
+```js
+const note = {
+  id: 1,
+  title: 'My first note',
+  author: {
+    firstName: 'Sherlock',
+    lastName: 'Holmes',
+  },
+}
+
+// Destructure properties into variables
+const { id, title } = note
+
+// Assign a custom name to a destructured value
+const { id: noteId, title } = note
+
+// Destructure nested properties
+const {
+  id,
+  title,
+  author: { firstName, lastName },
+} = note
+
+// Access object and nested values
+const {
+  author,
+  author: { firstName, lastName },
+} = note
+
+// setting new variable with default value
+const {title = 'foyez', date = new Date()} = note
+
+// destructring on function parameter
+const func = ({ id, title }) => `ID: ${id}, Title: ${title}`
+func(note)
+```
+
+## `Array Destructuring`
+
+```js
+const date = ['1970', '12', '01']
+const nestedArray = [1, 2, [3, 4], 5]
+
+// Destructure Array values into variables
+const [year, month, day] = date
+
+// Skip the second item in the array
+const [year, , day] = date
+
+// Destructure nested items
+const [one, two, [three, four], five] = nestedArray
+```
+
+## `Destructure the parameters in a function`
+
+```js
+const note = {
+  id: 1,
+  title: 'My first note',
+  date: '01/01/1970',
+}
+
+// Using forEach
+Object.entries(note).forEach(([key, value]) => {
+  console.log(`${key}: ${value}`)
+})
+
+// Using a for loop
+for (let [key, value] of Object.entries(note)) {
+  console.log(`${key}: ${value}`)
+}
+```
+  
+</details>
+
+## Spread Operator
+
+<details>
+<summary>View contents</summary>
+
+`Spread syntax is used to unpack iterables such as arrays, objects, and function calls.`
+
+## `Spread with Arrays`
+
+```js
+// Create an Array
+const tools = ['hammer', 'screwdriver']
+const otherTools = ['wrench', 'saw']
+
+// Unpack the tools Array into the allTools Array
+const allTools = [...tools, ...otherTools]
+
+// Add a new item
+const updatedAllTools = [...allTools, 'parek']
+```
+
+## `Convert Set to Array`
+
+```js
+// Create a set
+const set = new Set()
+
+set.add('octopus')
+set.add('starfish')
+set.add('whale')
+
+// Convert Set to Array
+const seaCreatures = [...set]
+```
+
+## `Convert String to Array`
+
+```js
+const string = 'hello'
+
+const stringArray = [...string]
+```
+
+## `Spread with Objects`
+
+```js
+const user = {
+  id: 3,
+  name: 'Ron',
+}
+
+// add an item
+const updatedUser = { ...user, isLoggedIn: true }
+
+const user = {
+  id: 3,
+  name: 'Ron',
+  organization: {
+    name: 'Parks & Recreation',
+    city: 'Pawnee',
+  },
+}
+
+// add item in nested object
+const updatedUser = { 
+  ...user, 
+  organization: {
+    ...user.organization,
+    position: 'Director'
+  } 
+}
+```
+
+## `Spread with Function Calls`
+
+```js
+function multiply(a, b, c) {
+  return a * b * c
+}
+
+const numbers = [1, 2, 3]
+multiply(...numbers) // 12
+```
+  
+</details>
+
+## Rest operator
+
+<details>
+<summary>View contents</summary>
+  
+`The syntax appears the same as spread (...) but has the opposite effect. Instead of unpacking an array or object into individual values, the rest syntax will create an array or object of an indefinite number of arguments.`
+
+```js
+const [firstTool, ...rest] = ['hammer', 'screwdriver', 'wrench']
+> firstTool // "hammer"
+> rest // ["screwdriver", "wrench"]
+
+const { isLoggedIn, ...rest } = { id: 1, name: 'Ben', isLoggedIn: true }
+> isLoggedIn // true
+> rest // { id: 1, name: 'Ben' }
+```
+
+```js
+function multiply(...numbers) {
+  return numbers.reduce((acc, num) => acc * num, 1)
+}
+
+multiply(1, 2, 3) // 6
+```
+
+```js
+function multiply(firstNum, ...numbers) {
+  console.log(firstNum) // 2
+  
+  return numbers.reduce((acc, num) => acc * num, 1)
+}
+
+multiply(2, 3, 4) // 12
+```
+  
+</details>
+
+## Function Arity
+
+<details>
+<summary>View contents</summary>
+
+```js
+/**
+ * arity = the number of arguments a function takes
+ */
+const log = console.log
+const functionArity = (func) => func.length
+
+function add(a, b = 1) {
+  log('arguments: ', arguments.length) // 4
+
+  const sum = a + b
+  console.log('sum: ', sum) // 3
+
+  const argumentsSum = [...arguments].reduce((acc, val) => acc + val, 0)
+  console.log('argumentsSum: ', argumentsSum) // 10
+}
+
+add(1, 2, 3, 4)
+log('arity: ', functionArity(add)) // 1, since b has a default value
+```
+  
+</details>
+
 ## Fetch api
 
 <details>
