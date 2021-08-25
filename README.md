@@ -5,7 +5,7 @@
 <details>
 <summary>View contents</summary>
 
-## var, let & const
+### var, let & const
 
 - `var` is a function scoped variable
 - `let` and `const` are block scoped variable
@@ -64,7 +64,7 @@ if (fullMoon) {
 console.log(species) // werewolf
 ```
 
-## hoisting
+### hoisting
 
 - In variable hoisting, only the variable declarations, and not the variable definition/assignment, is moved to the top of the scope chain.
 - In function hoisting, both the function declaration as well as the definition is moved to the top of the scope chain.
@@ -166,9 +166,9 @@ foo.someBarProp?.toUpperCase() ?? "not available" // "not available"
 <details>
 <summary>View contents</summary>
   
-## `this`
+### `this`
 
-### 1. Global Context
+#### 1. Global Context
 
 ```js
 console.log(this) // Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window, …}
@@ -192,7 +192,7 @@ function printThis() {
 printThis()
 ```
 
-### An Object Method
+#### An Object Method
 
 ```js
 const america = {
@@ -245,7 +245,7 @@ const america = new Country('The United States of America', 1776)
 america.describe()
 ```
 
-### A Class Constructor
+#### A Class Constructor
 
 ```js
 class Country {
@@ -310,7 +310,7 @@ longerSummary.apply(book, ['dystopian', 1932]) // "Brave New World was written b
 
 `Destructuring is used to create varibles from array items or object properties.`
 
-## `Object Destructuring`
+#### `Object Destructuring`
 ```js
 const note = {
   id: 1,
@@ -348,7 +348,7 @@ const func = ({ id, title }) => `ID: ${id}, Title: ${title}`
 func(note)
 ```
 
-## `Array Destructuring`
+#### `Array Destructuring`
 
 ```js
 const date = ['1970', '12', '01']
@@ -364,7 +364,7 @@ const [year, , day] = date
 const [one, two, [three, four], five] = nestedArray
 ```
 
-## `Destructure the parameters in a function`
+#### `Destructure the parameters in a function`
 
 ```js
 const note = {
@@ -393,7 +393,7 @@ for (let [key, value] of Object.entries(note)) {
 
 `Spread syntax is used to unpack iterables such as arrays, objects, and function calls.`
 
-## `Spread with Arrays`
+#### `Spread with Arrays`
 
 ```js
 // Create an Array
@@ -407,7 +407,7 @@ const allTools = [...tools, ...otherTools]
 const updatedAllTools = [...allTools, 'parek']
 ```
 
-## `Convert Set to Array`
+#### `Convert Set to Array`
 
 ```js
 // Create a set
@@ -421,7 +421,7 @@ set.add('whale')
 const seaCreatures = [...set]
 ```
 
-## `Convert String to Array`
+#### `Convert String to Array`
 
 ```js
 const string = 'hello'
@@ -429,7 +429,7 @@ const string = 'hello'
 const stringArray = [...string]
 ```
 
-## `Spread with Objects`
+#### `Spread with Objects`
 
 ```js
 const user = {
@@ -459,7 +459,7 @@ const updatedUser = {
 }
 ```
 
-## `Spread with Function Calls`
+#### `Spread with Function Calls`
 
 ```js
 function multiply(a, b, c) {
@@ -535,6 +535,71 @@ add(1, 2, 3, 4)
 log('arity: ', functionArity(add)) // 1, since b has a default value
 ```
   
+</details>
+
+## IFFE (Imediate Invoke Function Expression) <sup>[ref](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)</sup>
+
+<details>
+<summary>View contents</summary>
+
+__IFFE__ - runs as soon as it is defined.
+
+```js
+(function () {
+  statements
+})()
+```
+
+#### Use cases
+
+- Avoid polluting the global namespace
+
+```js
+// If we have some initiation code that we don't need to use again,
+// we could use the IIFE pattern.
+
+(function () {
+  // some initiation code
+  let firstVariable;
+  let secondVariable;
+})();
+
+// firstVariable and secondVariable will be discarded after the function is executed.
+```
+
+- The module pattern
+
+```js
+// We would also use IIFE to create private and public variables and methods.
+
+const makeWithdraw = balance => (function(copyBalance) {
+  let balance = copyBalance; // This variable is private
+  let doBadThings = function() {
+    console.log("I will do bad things with your money");
+  };
+  doBadThings();
+  return {
+    withdraw: function(amount) {
+      if (balance >= amount) {
+        balance -= amount;
+        return balance;
+      } else {
+        return "Insufficient money";
+      }
+    },
+  }
+})(balance);
+
+const firstAccount = makeWithdraw(100); // "I will do bad things with your money"
+console.log(firstAccount.balance); // undefined
+console.log(firstAccount.withdraw(20)); // 80
+console.log(firstAccount.withdraw(30)); // 50
+console.log(firstAccount.doBadThings); // undefined, this method is private
+const secondAccount = makeWithdraw(20); // "I will do bad things with your money"
+secondAccount.withdraw(30); // "Insufficient money"
+secondAccount.withdraw(20);  // 0
+```
+
 </details>
 
 ## Fetch api
