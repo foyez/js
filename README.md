@@ -537,7 +537,7 @@ log('arity: ', functionArity(add)) // 1, since b has a default value
   
 </details>
 
-## IFFE (Imediate Invoke Function Expression) <sup>[ref](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)</sup>
+## IFFE (Immediately Invoked Function Expression) <sup>[ref](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)</sup>
 
 <details>
 <summary>View contents</summary>
@@ -598,6 +598,126 @@ console.log(firstAccount.doBadThings); // undefined, this method is private
 const secondAccount = makeWithdraw(20); // "I will do bad things with your money"
 secondAccount.withdraw(30); // "Insufficient money"
 secondAccount.withdraw(20);  // 0
+```
+
+</details>
+
+## callback, promise, async/await and generator
+
+<details>
+<summary>View contents</summary>
+
+#### Callback
+
+```js
+function getNumber(num, cb) {
+  if(typeof num === 'number') {
+    cb(undefined, num * 2)
+  } else {
+    cb('Number must be provided.')
+  }
+}
+
+getNumber(6, (err, data) => { // data: 12
+  if(err) {
+    console.log(err)
+  } else {
+    getNumber(data, (err, data) => { // data: 24
+      if(err) {
+        console.log(err)
+      } else {
+        getNumber(data, (err, data) => { // data: 48
+          if(err) {
+            console.log(err)
+          } else {
+            console.log(data)
+          }
+        })
+      }
+    })
+  }
+})
+```
+
+#### Promise
+
+```js
+// ===================PROMISE===========================
+const getNumberPromise = num => new Promise((resolve, reject) => {
+  if(typeof num === 'number') {
+    resolve(num * 2)
+  } else {
+    reject('Number must be provided.')
+  }
+})
+
+// Promise Chaining
+getNumberPromise(6)
+  .then(data => getNumberPromise(data)) // data: 12
+  .then(data => getNumberPromise(data)) // data: 24
+  .then(data => console.log(`Promise: ${data}`)) // data: 48
+  .catch(err => console.log(`Promise: ${err}`))
+
+// async/await
+const processData = async () => {
+  try {
+    let data = await getNumberPromise(6) // data: 12
+    data = await getNumberPromise(data) // data: 24
+    data = await getNumberPromise(data) // data: 48
+    console.log(data)
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+processData()
+```
+
+#### Generator
+
+```js
+function* generator() {
+  let num = yield 6 // num: 12
+  num = yield num // num: 24
+  num = yield num // num: 48
+
+  console.log(num)
+}
+
+const gen = generator()
+
+const handleGenerator = (yielded) => {
+  if (!yielded.done) {
+    handleGenerator(gen.next(yielded.value * 2))
+  }
+}
+
+handleGenerator(gen.next())
+```
+
+OR
+
+```js
+const getNumberGen = (generator) => {
+  const gen = generator()
+
+  function handle(yielded) {
+    if(!yielded.done) {
+      if(typeof yielded.value === 'number') {
+        handle(gen.next(yielded.value * 2))
+      }
+    }
+  }
+
+  return handle(gen.next())
+}
+
+getNumberGen(function* () {
+  let num = yield 6 // num: 12
+  num = yield num // num: 24
+  num = yield num // num: 48
+  console.log(`Generator: ${num}`)
+})
 ```
 
 </details>
