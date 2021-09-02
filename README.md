@@ -722,6 +722,33 @@ getNumberGen(function* () {
 
 </details>
 
+## Function Composition
+
+<details>
+<summary>View contents</summary>
+
+`function composition allows you to apply one function to the output of another function.`
+
+```js
+const makeLouder = (str) => str.toUpperCase();
+const repeatThreeTimes = (str) => str.repeat(3);
+const embolden = (str) => str.bold();
+
+const makeLouderRepeatThreeTimesEmbolden = (str) => embolden(repeatThreeTimes(makeLouder(str)));
+
+const compose = (...funcs) => args => funcs.reduceRight((arg, fn) => fn(arg), args);
+const makeLouderRepeatThreeTimesEmbolden2 = compose(
+  embolden,
+  repeatThreeTimes,
+  makeLouder
+);
+
+console.log(makeLouderRepeatThreeTimesEmbolden("hello")); // <b>HELLOHELLOHELLO</b>
+console.log(makeLouderRepeatThreeTimesEmbolden("hello")); // <b>HELLOHELLOHELLO</b>
+```
+
+</details>
+
 ## Fetch api
 
 <details>
