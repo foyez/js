@@ -749,6 +749,53 @@ console.log(makeLouderRepeatThreeTimesEmbolden("hello")); // <b>HELLOHELLOHELLO<
 
 </details>
 
+## Inversion of Control
+
+<details>
+<summary>View contents</summary>
+
+#### Filter items from array (without inversion of control)
+  
+```js
+function filter(arr, {
+  filterNull = true,
+  filterZero = true,
+} = {}) {
+  let newArr = []
+  for (const item of arr) {
+    if (filterNull && item === null || filterZero && item === 0) {
+      continue
+    }
+    newArr[newArr.length] = item
+  }
+  return newArr
+}
+
+const arr = [0, 1, 2, null]
+console.log(filter(arr, {filterNull: true, filterZero: true})) // [1, 2]
+```
+  
+#### Filter items from array (using inversion of control)
+  
+```js
+function filter(arr, filterFn) {
+  let newArr = []
+  for (const item of arr) {
+    if (filterFn(item)){
+      newArr[newArr.length] = item
+    }
+  }
+  return newArr
+}
+
+const arr = [0, 1, 2, null]
+const filterNullAndZero = item => item !== null && item !== 0
+// console.log(filter(arr, item => item !== null && item !== 0)) // [1, 2]
+console.log(filter(arr, filterNullAndZero)) // [1, 2]
+```
+  
+</details>
+
 ## Fetch api
 
 <details>
