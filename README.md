@@ -839,9 +839,9 @@ const isObject = val => typeof val === 'object' && val !== null && !Array.isArra
  * @param {string} methodName request method name
  * @param {string} data send data to server; datatype of data depends on api
  */
-const apiCall = async (url, methodName = 'GET', data = null) => {
+const apiCall = async ({ url, method = 'GET', data = null }) => {
   const fetchData = {
-    method: methodName,
+    method,
     ...isObject(data) && { body: JSON.stringify(data) }, // add body property if data is an object
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
@@ -859,7 +859,7 @@ const apiCall = async (url, methodName = 'GET', data = null) => {
 }
 
 const data = { title: "foo", body: "bar", userId: 1 }
-const [data, err] = await apiCall("https://jsonplaceholder.typicode.com/posts", "POST", data)
+const [data, err] = await apiCall({ url: "https://jsonplaceholder.typicode.com/posts", method: "POST", data })
   
 if (err !== null) {
   // handle errors
