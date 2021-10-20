@@ -831,7 +831,7 @@ __Response methods__
 Fetch api wrapper function
 
 ```js
-const isObject = val => typeof val === 'object' && val !== null && !Array.isArray(val)
+const isObject = val => val !== null && !Array.isArray(val) && typeof val === 'object'
   
 /**
  * handle server request using fetch api
