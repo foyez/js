@@ -835,9 +835,11 @@ const isObject = val => val !== null && !Array.isArray(val) && typeof val === 'o
   
 /**
  * handle server request using fetch api
- * @param {string} url name of the api url
- * @param {string} methodName request method name
- * @param {string} data send data to server; datatype of data depends on api
+ *
+ * @param {Object} fetchArgs - arguments of fetch function
+ * @param {string} fetchArgs.url - name of the api url
+ * @param {string} [fetchArgs.method] - request method name
+ * @param {unknown} [fetchArgs.data] - send data to server; datatype of data depends on api
  */
 const apiCall = async ({ url, method = 'GET', data = null }) => {
   const fetchData = {
