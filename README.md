@@ -1,13 +1,5 @@
 # Javascript
 
-## JS case types
-
-- snake_case
-- kebab-case
-- camelCase (variables, functions)
-- PascalCase (classes)
-- SCREAMING_SNAKE_CASE (constants)
-
 ## var, let, const and hoisting
 
 <details>
@@ -517,6 +509,115 @@ multiply(2, 3, 4) // 12
   
 </details>
 
+## Deep copy vs Shallow copy
+
+<details>
+<summary>View contents</summary>
+
+- A deep copy means that all of the values of the new variable are copied and disconnected from the original variable. 
+- A shallow copy means that certain (sub-)values are still connected to the original variable.
+
+```js
+// In JS, objects are referenced by memory
+const obj1 = { name: 'Javascript' }
+
+// Copying the reference memory of `obj1`
+// obj1 and obj2 point to the same memory reference
+// actually this is a shallow copy
+const obj2 = obj1
+
+obj2.name = 'Golang'
+
+console.log(obj1, obj2) // {name: 'Golang'} {name: 'Golang'}
+```
+
+```js
+const obj1 = { name: 'Javascript' }
+
+// Copying the object's values
+// this is a deep copy
+const obj2 = { ...obj1 }
+// const obj2 = Object.assign({}, obj1)
+// const obj2 = JSON.parse(JSON.stringify(obj1))
+
+obj2.name = 'Golang'
+
+console.log(obj1, obj2) // {name: 'Javascript'} {name: 'Golang'}
+```
+
+What about nested objects or array (array is also object in JS)?
+
+```js
+const obj1 = {
+  layer: 1,
+  key1: {
+    layer: 2,
+    key2: {
+      layer: 3,
+      name: 'Javascript'
+    }
+  }
+}
+
+// copies only the values of first layer
+// this is a shallow copy
+const obj2 = { ...obj2 }
+
+obj2.key1.key2.name = 'Golang'
+
+console.log(obj1 === obj2) // false
+console.log(obj1.key1 === obj2.key1) // true
+console.log(obj1.key1.key2.name, obj2.key1.key2.name) // 'Golang' 'Golang'
+```
+
+```js
+const arr1 = [1, [2, [3]]]
+
+// copies only the values of first layer
+// this is a shallow copy
+const arr2 = [...arr1]
+
+arr2[0] = 78
+arr2[1][0] = 47
+
+console.log(arr1 === arr2) // false
+console.log(arr1[0] === arr2[0]) // false
+console.log(arr1[1] === arr2[1]) // true
+console.log(arr1, arr2) // [1, [47, [3]]] [78, [47, [3]]]
+```
+
+```js
+const obj1 = {
+  layer: 1,
+  key1: {
+    layer: 2,
+    key2: {
+      layer: 3,
+      name: 'Javascript'
+    }
+  }
+}
+
+// deep copy using spread operator
+const spreadDeepCopy = {
+  ...obj1,
+  key1: {
+    ...obj1.key1,
+    key2: {
+      ...obj2.key1.key2,
+      name: 'Golang'
+    }
+  }
+}
+
+// deep copy using JSON parse & stringify
+// you can only use it when you copy objects with native JavaScript values
+// you will not be able to copy custom class instances or circular values
+const jsonDeepCopy = JSON.parse(JSON.stringify(obj1))
+```
+
+</details>
+
 ## Function Arity
 
 <details>
@@ -607,6 +708,15 @@ const secondAccount = makeWithdraw(20); // "I will do bad things with your money
 secondAccount.withdraw(30); // "Insufficient money"
 secondAccount.withdraw(20);  // 0
 ```
+
+</details>
+
+## Iterators and generator
+
+<details>
+<summary>View contents</summary>
+
+#### Iterators
 
 </details>
 
@@ -730,80 +840,6 @@ getNumberGen(function* () {
 
 </details>
 
-## Function Composition
-
-<details>
-<summary>View contents</summary>
-
-`function composition allows you to apply one function to the output of another function.`
-
-```js
-const makeLouder = (str) => str.toUpperCase();
-const repeatThreeTimes = (str) => str.repeat(3);
-const embolden = (str) => str.bold();
-
-const makeLouderRepeatThreeTimesEmbolden = (str) => embolden(repeatThreeTimes(makeLouder(str)));
-
-const compose = (...funcs) => args => funcs.reduceRight((arg, fn) => fn(arg), args);
-const makeLouderRepeatThreeTimesEmbolden2 = compose(
-  embolden,
-  repeatThreeTimes,
-  makeLouder
-);
-
-console.log(makeLouderRepeatThreeTimesEmbolden("hello")); // <b>HELLOHELLOHELLO</b>
-console.log(makeLouderRepeatThreeTimesEmbolden("hello")); // <b>HELLOHELLOHELLO</b>
-```
-
-</details>
-
-## Inversion of Control
-
-<details>
-<summary>View contents</summary>
-
-#### Filter items from array (without inversion of control)
-  
-```js
-function filter(arr, {
-  filterNull = true,
-  filterZero = true,
-} = {}) {
-  let newArr = []
-  for (const item of arr) {
-    if (filterNull && item === null || filterZero && item === 0) {
-      continue
-    }
-    newArr[newArr.length] = item
-  }
-  return newArr
-}
-
-const arr = [0, 1, 2, null]
-console.log(filter(arr, {filterNull: true, filterZero: true})) // [1, 2]
-```
-  
-#### Filter items from array (using inversion of control)
-  
-```js
-function filter(arr, filterFn) {
-  let newArr = []
-  for (const item of arr) {
-    if (filterFn(item)){
-      newArr[newArr.length] = item
-    }
-  }
-  return newArr
-}
-
-const arr = [0, 1, 2, null]
-const filterNullAndZero = item => item !== null && item !== 0
-// console.log(filter(arr, item => item !== null && item !== 0)) // [1, 2]
-console.log(filter(arr, filterNullAndZero)) // [1, 2]
-```
-  
-</details>
-
 ## Fetch api
 
 <details>
@@ -839,19 +875,17 @@ __Response methods__
 Fetch api wrapper function
 
 ```js
-const isObject = val => val !== null && !Array.isArray(val) && typeof val === 'object'
+const isObject = val => typeof val === 'object' && val !== null && !Array.isArray(val)
   
 /**
  * handle server request using fetch api
- *
- * @param {Object} fetchArgs - arguments of fetch function
- * @param {string} fetchArgs.url - name of the api url
- * @param {string} [fetchArgs.method] - request method name
- * @param {unknown} [fetchArgs.data] - send data to server; datatype of data depends on api
+ * @param {string} url name of the api url
+ * @param {string} methodName request method name
+ * @param {string} data send data to server; datatype of data depends on api
  */
-const apiCall = async ({ url, method = 'GET', data = null }) => {
+const apiCall = async (url, methodName = 'GET', data = null) => {
   const fetchData = {
-    method,
+    method: methodName,
     ...isObject(data) && { body: JSON.stringify(data) }, // add body property if data is an object
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
@@ -869,7 +903,7 @@ const apiCall = async ({ url, method = 'GET', data = null }) => {
 }
 
 const data = { title: "foo", body: "bar", userId: 1 }
-const [data, err] = await apiCall({ url: "https://jsonplaceholder.typicode.com/posts", method: "POST", data })
+const [data, err] = await apiCall("https://jsonplaceholder.typicode.com/posts", "POST", data)
   
 if (err !== null) {
   // handle errors
