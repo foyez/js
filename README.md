@@ -529,7 +529,7 @@ multiply(2, 3, 4) // 12
 // In JS, objects are referenced by memory
 const obj1 = { name: 'Javascript' }
 
-// Copying the reference memory of `obj1`
+// Copying the memory referecne of `obj1`
 // obj1 and obj2 point to the same memory reference
 // actually this is a shallow copy
 const obj2 = obj1
@@ -557,17 +557,17 @@ What about nested objects or array (array is also object in JS)?
 
 ```js
 const obj1 = {
-  layer: 1,
+  level: 1,
   key1: {
-    layer: 2,
+    level: 2,
     key2: {
-      layer: 3,
+      level: 3,
       name: 'Javascript'
     }
   }
 }
 
-// copies only the values of first layer
+// copies only the values of top level
 // this is a shallow copy
 const obj2 = { ...obj2 }
 
@@ -581,7 +581,7 @@ console.log(obj1.key1.key2.name, obj2.key1.key2.name) // 'Golang' 'Golang'
 ```js
 const arr1 = [1, [2, [3]]]
 
-// copies only the values of first layer
+// copies only the values of top level
 // this is a shallow copy
 const arr2 = [...arr1]
 // const arr2 = Object.assign([], arr1)
@@ -597,11 +597,11 @@ console.log(arr1, arr2) // [1, [47, [3]]] [78, [47, [3]]]
 
 ```js
 const obj1 = {
-  layer: 1,
+  level: 1,
   key1: {
-    layer: 2,
+    level: 2,
     key2: {
-      layer: 3,
+      level: 3,
       name: 'Javascript'
     }
   }
@@ -621,8 +621,95 @@ const spreadDeepCopy = {
 
 // deep copy using JSON parse & stringify
 // you can only use it when you copy objects with native JavaScript values
-// you will not be able to copy custom class instances or circular values
+// you will not be able to copy custom class instances
+// drawbacks, loose data structure dependencies, like, functions or circular dependencies
 const jsonDeepCopy = JSON.parse(JSON.stringify(obj1))
+```
+
+</details>
+
+## Objects Comparision <sup>[ref](https://dmitripavlutin.com/how-to-compare-objects-in-javascript/)</sup>
+
+<details>
+<summary>View contents</summary>
+
+**1. Referential equality - compared values reference**
+
+JavaScript provides 3 ways to compare values:
+
+- The strict equality operator ===
+- The loose equality operator ==
+- Object.is() function
+
+When comparing objects using any of the above, that is called referential equality.
+
+```js
+const lang1 = { name: 'Javascript' }
+const lang2 = { name: 'Javascript' }
+const lang3 = { ...lang1 }
+
+lang1 === lang1; // => true
+lang1 === lang3; // => true
+lang1 === lang2; // => false
+
+lang1 == lang1; // => true
+lang1 == lang3; // => true
+lang1 == lang2; // => false
+
+Object.is(lang1, lang1); // => true
+Object.is(lang1, lang3); // => true
+Object.is(lang1, lang2); // => false
+```
+
+Referential equality is useful when you'd like to compare object references, rather than their content.
+
+**3. Shallow equality - check the properties' values**
+
+```js
+function shallowEqual(object1, object2) {
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (let key of keys1) {
+    if (object1[key] !== object2[key]) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
+But objects in JavaScript can be nested. In such a case, unfortunately, the shallow equality doesn't work well.
+
+**3. Deep equality**
+
+> During the shallow check, if the compared properties are objects, a recursive shallow equality check is performed on these nested objects, is called deeply equality.
+
+```js
+function deepEqual(object1, object2) {
+  const keys1 = Object.keys(object1);
+  const keys2 = Object.keys(object2);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  for (const key of keys1) {
+    const val1 = object1[key];
+    const val2 = object2[key];
+    const areObjects = isObject(val1) && isObject(val2);
+    if (
+      areObjects && !deepEqual(val1, val2) ||
+      !areObjects && val1 !== val2
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+function isObject(object) {
+  return object != null && typeof object === 'object';
+}
 ```
 
 </details>
