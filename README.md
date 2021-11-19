@@ -584,6 +584,7 @@ const arr1 = [1, [2, [3]]]
 // copies only the values of first layer
 // this is a shallow copy
 const arr2 = [...arr1]
+// const arr2 = Object.assign([], arr1)
 
 arr2[0] = 78
 arr2[1][0] = 47
