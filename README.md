@@ -646,24 +646,20 @@ When comparing objects using any of the above, that is called referential equali
 ```js
 const lang1 = { name: 'Javascript' }
 const lang2 = { name: 'Javascript' }
-const lang3 = { ...lang1 }
 
 lang1 === lang1; // => true
-lang1 === lang3; // => true
 lang1 === lang2; // => false
 
 lang1 == lang1; // => true
-lang1 == lang3; // => true
 lang1 == lang2; // => false
 
 Object.is(lang1, lang1); // => true
-Object.is(lang1, lang3); // => true
 Object.is(lang1, lang2); // => false
 ```
 
 Referential equality is useful when you'd like to compare object references, rather than their content.
 
-**3. Shallow equality - check the properties' values**
+**2. Shallow equality - check the properties' values**
 
 ```js
 function shallowEqual(object1, object2) {
