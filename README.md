@@ -22,32 +22,37 @@
 - Multi-line comment
 
 ```js
-//  Multi-line comment
+/**
+* Multi-line comment
+*/
 ```
 
 -  JSDoc to document a function
 
 ```js
- /**
+	/**
  * JSDoc to document a function
  *
  * @param {number} x - The number.
  * @param {Object} obj - The object to pass as argument.
  * @param {string} obj.name - The name key property
  * @param {number} [obj.age] - The age key property is optional
- * @return {number} x - returns modified x.
+ * @param {{name: string, age: number}[]} arr - The arr argument
+ * @return {number} returns modified x.
  */
-function func(x, obj) {
-  ...
+function func(x, obj, arr) {
   return x
 }
 ```
 
 ```js
-function func(x: number, obj: {
+func(x: number, obj: {
     name: string;
     age?: number;
-}): number
+}, arr: {
+    name: string;
+    age: number;
+}[]): number
 ```
 
 </details>
