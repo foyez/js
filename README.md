@@ -23,14 +23,14 @@
 
 ```js
 /**
-* Multi-line comment
-*/
+ * Multi-line comment
+ */
 ```
 
--  JSDoc to document a function
+- JSDoc to document a function
 
 ```js
-	/**
+/**
  * JSDoc to document a function
  *
  * @param {number} x - The number.
@@ -41,7 +41,7 @@
  * @return {number} returns modified x.
  */
 function func(x, obj, arr) {
-  return x
+  return x;
 }
 ```
 
@@ -69,56 +69,56 @@ func(x: number, obj: {
 - Duplicate declaration of variables, which is possible with `var`, will throw an error with `let` and `const`.
 - `var` allows the possibility of `hoisting`, which is variable declarations being saved to memory. This allows for the unintended consequence of undefined variables in your code. The introduction of `let` and `const` resolves this issue, by throwing an error when attempting to use a variable before declaring it or attempting to declare a variable more than once.
 
-| Keyword |	Scope |	Hoisting |	Can Be Reassigned |	Can Be Redeclared |
-|---------|-------|----------|--------------------|-------------------|
-| var |	Function scope |	Yes |	Yes |	Yes |
-| let |	Block scope |	No |	Yes |	No |
-| const |	Block scope |	No |	No |	No |
+| Keyword | Scope          | Hoisting | Can Be Reassigned | Can Be Redeclare |
+| ------- | -------------- | -------- | ----------------- | ---------------- |
+| var     | Function scope | Yes      | Yes               | Yes              |
+| let     | Block scope    | No       | Yes               | No               |
+| const   | Block scope    | No       | No                | No               |
 
 ```js
 // Initialize a global variable
-var species = 'human'
+var species = "human";
 
 function transform() {
   // Initialize a local, function-scoped variable
-  var species = 'werewolf'
-  console.log(species)
+  var species = "werewolf";
+  console.log(species);
 }
 
 // Log the global and local variable
-console.log(species) // human
-transform() // werewolf
-console.log(species) // human
+console.log(species); // human
+transform(); // werewolf
+console.log(species); // human
 ```
 
 ```js
-var fullMoon = true
+var fullMoon = true;
 
 // Initialize a global variable
-let species = 'human'
+let species = "human";
 
 if (fullMoon) {
   // Initialize a block scoped variable
-  let species = 'werewolf'
-  console.log(species) // werewolf
+  let species = "werewolf";
+  console.log(species); // werewolf
 }
 
-console.log(species) // human
+console.log(species); // human
 ```
 
 ```js
-var fullMoon = true
+var fullMoon = true;
 
 // Initialize a global variable
-var species = 'human'
+var species = "human";
 
 if (fullMoon) {
   // Initialize a block scoped variable
-  var species = 'werewolf'
-  console.log(species) // werewolf
+  var species = "werewolf";
+  console.log(species); // werewolf
 }
 
-console.log(species) // werewolf
+console.log(species); // werewolf
 ```
 
 ### hoisting
@@ -128,55 +128,55 @@ console.log(species) // werewolf
 
 ```js
 // Attempt to use a variable before declaring it
-console.log(x) // undefined
+console.log(x); // undefined
 
 // Variable assignment
-var x = 100
+var x = 100;
 ```
 
-The reason for this is due to hoisting, a JavaScript action in which __variable and function declarations are moved to the 
-top of their scope__. Since only the actual declaration is hoisted, and not the initialization, the value in the first 
+The reason for this is due to hoisting, a JavaScript action in which **variable and function declarations are moved to the
+top of their scope**. Since only the actual declaration is hoisted, and not the initialization, the value in the first
 example returns undefined.
 
 ```js
 // The code we wrote
-console.log(x)
-var x = 100
+console.log(x);
+var x = 100;
 
 // How JavaScript interpreted it
-var x
-console.log(x)
-x = 100
+var x;
+console.log(x);
+x = 100;
 ```
 
 ```js
 // Initialize x in the global scope
-var x = 100
+var x = 100;
 
 function hoist() {
   // A condition that should not affect the outcome of the code
   if (false) {
-    var x = 200
+    var x = 200;
   }
-  console.log(x) // undefined
+  console.log(x); // undefined
 }
 
-hoist()
+hoist();
 ```
 
 ```js
 // Initialize x in the global scope
-let x = 100
+let x = 100;
 
 function hoist() {
   // A condition that should not affect the outcome of the code
   if (false) {
-    let x = 200
+    let x = 200;
   }
-  console.log(x) // 100
+  console.log(x); // 100
 }
 
-hoist()
+hoist();
 ```
 
 </details>
@@ -211,7 +211,7 @@ obj.arr?.[1] // undefined
 null || undefined ?? "foo" // syntax error
 (null || undefined) ?? "foo" // "foo"
 
-const foo = { someFooProp: "hi" } 
+const foo = { someFooProp: "hi" }
 foo.someFooProp?.toUpperCase() ?? "not available" // "HI"
 foo.someBarProp?.toUpperCase() ?? "not available" // "not available"
 ```
@@ -228,78 +228,77 @@ foo.someBarProp?.toUpperCase() ?? "not available" // "not available"
 #### 1. Global Context
 
 ```js
-console.log(this) // Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window, …}
+console.log(this); // Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window, …}
 ```
 
 ```js
 function printThis() {
-  console.log(this) // Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window, …}
+  console.log(this); // Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window, …}
 }
 
-printThis()
+printThis();
 ```
 
 ```js
-'use strict'
+"use strict";
 
 function printThis() {
-  console.log(this) // undefined
+  console.log(this); // undefined
 }
 
-printThis()
+printThis();
 ```
 
 #### An Object Method
 
 ```js
 const america = {
-  name: 'The United States of America',
+  name: "The United States of America",
   yearFounded: 1776,
 
   describe() {
-    console.log(`${this.name} was founded in ${this.yearFounded}.`) // "The United States of America was founded in 1776."
+    console.log(`${this.name} was founded in ${this.yearFounded}.`); // "The United States of America was founded in 1776."
   },
-}
+};
 
-america.describe()
+america.describe();
 ```
 
 #### Nested object
 
 ```js
 const america = {
-  name: 'The United States of America',
+  name: "The United States of America",
   yearFounded: 1776,
   details: {
-    symbol: 'eagle',
-    currency: 'USD',
+    symbol: "eagle",
+    currency: "USD",
     printDetails() {
       console.log(
-        `The symbol is the ${this.symbol} and the currency is ${this.currency}.`,
-      ) // "The symbol is the eagle and the currency is USD."
+        `The symbol is the ${this.symbol} and the currency is ${this.currency}.`
+      ); // "The symbol is the eagle and the currency is USD."
     },
   },
-}
+};
 
-america.details.printDetails()
+america.details.printDetails();
 ```
 
 ### A Function Constructor
 
 ```js
 function Country(name, yearFounded) {
-  this.name = name
-  this.yearFounded = yearFounded
+  this.name = name;
+  this.yearFounded = yearFounded;
 
   this.describe = function () {
-    console.log(`${this.name} was founded in ${this.yearFounded}.`) // "The United States of America was founded in 1776."
-
-  }
+    console.log(`${this.name} was founded in ${this.yearFounded}.`); // "The United States of America was founded in 1776."
+  };
 }
 
-const america = new Country('The United States of America', 1776)
+const america = new Country("The United States of America", 1776);
 
-america.describe()
+america.describe();
 ```
 
 #### A Class Constructor
@@ -307,18 +306,18 @@ america.describe()
 ```js
 class Country {
   constructor(name, yearFounded) {
-    this.name = name
-    this.yearFounded = yearFounded
+    this.name = name;
+    this.yearFounded = yearFounded;
   }
 
   describe() {
-    console.log(`${this.name} was founded in ${this.yearFounded}.`) // "The United States of America was founded in 1776."
+    console.log(`${this.name} was founded in ${this.yearFounded}.`); // "The United States of America was founded in 1776."
   }
 }
 
-const america = new Country('The United States of America', 1776)
+const america = new Country("The United States of America", 1776);
 
-america.describe()
+america.describe();
 ```
 
 ## call, apply & bind
@@ -330,34 +329,34 @@ america.describe()
 
 ```js
 const book = {
-  title: 'Brave New World',
-  author: 'Aldous Huxley',
-}
+  title: "Brave New World",
+  author: "Aldous Huxley",
+};
 
 function summary() {
-  console.log(`${this.title} was written by ${this.author}.`)
+  console.log(`${this.title} was written by ${this.author}.`);
 }
 
-summary() // "undefined was written by undefined"
+summary(); // "undefined was written by undefined"
 
 // call and apply are used to invoke the this context of book on the function.
-summary.call(book) // "Brave New World was written by Aldous Huxley."
-summary.apply(book) // "Brave New World was written by Aldous Huxley."
+summary.call(book); // "Brave New World was written by Aldous Huxley."
+summary.apply(book); // "Brave New World was written by Aldous Huxley."
 
 // bind
-const braveNewWorldSummary = summary.bind(book)
-braveNewWorldSummary() // "Brave New World was written by Aldous Huxley."
+const braveNewWorldSummary = summary.bind(book);
+braveNewWorldSummary(); // "Brave New World was written by Aldous Huxley."
 
 function longerSummary(genre, year) {
   console.log(
-    `${this.title} was written by ${this.author}. It is a ${genre} novel written in ${year}.`,
-  )
+    `${this.title} was written by ${this.author}. It is a ${genre} novel written in ${year}.`
+  );
 }
 
-longerSummary.call(book, 'dystopian', 1932) // "Brave New World was written by Aldous Huxley. It is a dystopian novel written in 1932."
-longerSummary.apply(book, ['dystopian', 1932]) // "Brave New World was written by Aldous Huxley. It is a dystopian novel written in 1932."
+longerSummary.call(book, "dystopian", 1932); // "Brave New World was written by Aldous Huxley. It is a dystopian novel written in 1932."
+longerSummary.apply(book, ["dystopian", 1932]); // "Brave New World was written by Aldous Huxley. It is a dystopian novel written in 1932."
 ```
-  
+
 </details>
 
 ## Destructuring
@@ -368,57 +367,58 @@ longerSummary.apply(book, ['dystopian', 1932]) // "Brave New World was written b
 `Destructuring is used to create varibles from array items or object properties.`
 
 #### `Object Destructuring`
+
 ```js
 const note = {
   id: 1,
-  title: 'My first note',
+  title: "My first note",
   author: {
-    firstName: 'Sherlock',
-    lastName: 'Holmes',
+    firstName: "Sherlock",
+    lastName: "Holmes",
   },
-}
+};
 
 // Destructure properties into variables
-const { id, title } = note
+const { id, title } = note;
 
 // Assign a custom name to a destructured value
-const { id: noteId, title } = note
+const { id: noteId, title } = note;
 
 // Destructure nested properties
 const {
   id,
   title,
   author: { firstName, lastName },
-} = note
+} = note;
 
 // Access object and nested values
 const {
   author,
   author: { firstName, lastName },
-} = note
+} = note;
 
 // setting new variable with default value
-const {title = 'foyez', date = new Date()} = note
+const { title = "foyez", date = new Date() } = note;
 
 // destructring on function parameter
-const func = ({ id, title }) => `ID: ${id}, Title: ${title}`
-func(note)
+const func = ({ id, title }) => `ID: ${id}, Title: ${title}`;
+func(note);
 ```
 
 #### `Array Destructuring`
 
 ```js
-const date = ['1970', '12', '01']
-const nestedArray = [1, 2, [3, 4], 5]
+const date = ["1970", "12", "01"];
+const nestedArray = [1, 2, [3, 4], 5];
 
 // Destructure Array values into variables
-const [year, month, day] = date
+const [year, month, day] = date;
 
 // Skip the second item in the array
-const [year, , day] = date
+const [year, , day] = date;
 
 // Destructure nested items
-const [one, two, [three, four], five] = nestedArray
+const [one, two, [three, four], five] = nestedArray;
 ```
 
 #### `Destructure the parameters in a function`
@@ -426,21 +426,21 @@ const [one, two, [three, four], five] = nestedArray
 ```js
 const note = {
   id: 1,
-  title: 'My first note',
-  date: '01/01/1970',
-}
+  title: "My first note",
+  date: "01/01/1970",
+};
 
 // Using forEach
 Object.entries(note).forEach(([key, value]) => {
-  console.log(`${key}: ${value}`)
-})
+  console.log(`${key}: ${value}`);
+});
 
 // Using a for loop
 for (let [key, value] of Object.entries(note)) {
-  console.log(`${key}: ${value}`)
+  console.log(`${key}: ${value}`);
 }
 ```
-  
+
 </details>
 
 ## Spread Operator
@@ -454,36 +454,36 @@ for (let [key, value] of Object.entries(note)) {
 
 ```js
 // Create an Array
-const tools = ['hammer', 'screwdriver']
-const otherTools = ['wrench', 'saw']
+const tools = ["hammer", "screwdriver"];
+const otherTools = ["wrench", "saw"];
 
 // Unpack the tools Array into the allTools Array
-const allTools = [...tools, ...otherTools]
+const allTools = [...tools, ...otherTools];
 
 // Add a new item
-const updatedAllTools = [...allTools, 'parek']
+const updatedAllTools = [...allTools, "parek"];
 ```
 
 #### `Convert Set to Array`
 
 ```js
 // Create a set
-const set = new Set()
+const set = new Set();
 
-set.add('octopus')
-set.add('starfish')
-set.add('whale')
+set.add("octopus");
+set.add("starfish");
+set.add("whale");
 
 // Convert Set to Array
-const seaCreatures = [...set]
+const seaCreatures = [...set];
 ```
 
 #### `Convert String to Array`
 
 ```js
-const string = 'hello'
+const string = "hello";
 
-const stringArray = [...string]
+const stringArray = [...string];
 ```
 
 #### `Spread with Objects`
@@ -491,42 +491,42 @@ const stringArray = [...string]
 ```js
 const user = {
   id: 3,
-  name: 'Ron',
-}
+  name: "Ron",
+};
 
 // add an item
-const updatedUser = { ...user, isLoggedIn: true }
+const updatedUser = { ...user, isLoggedIn: true };
 
 const user = {
   id: 3,
-  name: 'Ron',
+  name: "Ron",
   organization: {
-    name: 'Parks & Recreation',
-    city: 'Pawnee',
+    name: "Parks & Recreation",
+    city: "Pawnee",
   },
-}
+};
 
 // add item in nested object
-const updatedUser = { 
-  ...user, 
+const updatedUser = {
+  ...user,
   organization: {
     ...user.organization,
-    position: 'Director'
-  } 
-}
+    position: "Director",
+  },
+};
 ```
 
 #### `Spread with Function Calls`
 
 ```js
 function multiply(a, b, c) {
-  return a * b * c
+  return a * b * c;
 }
 
-const numbers = [1, 2, 3]
-multiply(...numbers) // 12
+const numbers = [1, 2, 3];
+multiply(...numbers); // 12
 ```
-  
+
 </details>
 
 ## Rest operator
@@ -537,33 +537,35 @@ multiply(...numbers) // 12
 `The syntax appears the same as spread (...) but has the opposite effect. Instead of unpacking an array or object into individual values, the rest syntax will create an array or object of an indefinite number of arguments.`
 
 ```js
-const [firstTool, ...rest] = ['hammer', 'screwdriver', 'wrench']
-> firstTool // "hammer"
-> rest // ["screwdriver", "wrench"]
+const [firstTool, ...rest] =
+  ["hammer", "screwdriver", "wrench"] >
+  firstTool > // "hammer"
+  rest; // ["screwdriver", "wrench"]
 
-const { isLoggedIn, ...rest } = { id: 1, name: 'Ben', isLoggedIn: true }
-> isLoggedIn // true
-> rest // { id: 1, name: 'Ben' }
+const { isLoggedIn, ...rest } =
+  { id: 1, name: "Ben", isLoggedIn: true } >
+  isLoggedIn > // true
+  rest; // { id: 1, name: 'Ben' }
 ```
 
 ```js
 function multiply(...numbers) {
-  return numbers.reduce((acc, num) => acc * num, 1)
+  return numbers.reduce((acc, num) => acc * num, 1);
 }
 
-multiply(1, 2, 3) // 6
+multiply(1, 2, 3); // 6
 ```
 
 ```js
 function multiply(firstNum, ...numbers) {
-  console.log(firstNum) // 2
-  
-  return numbers.reduce((acc, num) => acc * num, 1)
+  console.log(firstNum); // 2
+
+  return numbers.reduce((acc, num) => acc * num, 1);
 }
 
-multiply(2, 3, 4) // 12
+multiply(2, 3, 4); // 12
 ```
-  
+
 </details>
 
 ## Deep copy vs Shallow copy
@@ -571,35 +573,35 @@ multiply(2, 3, 4) // 12
 <details>
 <summary>View contents</summary>
 
-- A deep copy means that all of the values of the new variable are copied and disconnected from the original variable. 
+- A deep copy means that all of the values of the new variable are copied and disconnected from the original variable.
 - A shallow copy means that certain (sub-)values are still connected to the original variable.
 
 ```js
 // In JS, objects are referenced by memory
-const obj1 = { name: 'Javascript' }
+const obj1 = { name: "Javascript" };
 
 // Copying the memory referecne of `obj1`
 // obj1 and obj2 point to the same memory reference
 // actually this is a shallow copy
-const obj2 = obj1
+const obj2 = obj1;
 
-obj2.name = 'Golang'
+obj2.name = "Golang";
 
-console.log(obj1, obj2) // {name: 'Golang'} {name: 'Golang'}
+console.log(obj1, obj2); // {name: 'Golang'} {name: 'Golang'}
 ```
 
 ```js
-const obj1 = { name: 'Javascript' }
+const obj1 = { name: "Javascript" };
 
 // Copying the object's values
 // this is a deep copy
-const obj2 = { ...obj1 }
+const obj2 = { ...obj1 };
 // const obj2 = Object.assign({}, obj1)
 // const obj2 = JSON.parse(JSON.stringify(obj1))
 
-obj2.name = 'Golang'
+obj2.name = "Golang";
 
-console.log(obj1, obj2) // {name: 'Javascript'} {name: 'Golang'}
+console.log(obj1, obj2); // {name: 'Javascript'} {name: 'Golang'}
 ```
 
 What about nested objects or array (array is also object in JS)?
@@ -611,37 +613,37 @@ const obj1 = {
     level: 2,
     key2: {
       level: 3,
-      name: 'Javascript'
-    }
-  }
-}
+      name: "Javascript",
+    },
+  },
+};
 
 // copies only the values of top level
 // this is a shallow copy
-const obj2 = { ...obj2 }
+const obj2 = { ...obj2 };
 
-obj2.key1.key2.name = 'Golang'
+obj2.key1.key2.name = "Golang";
 
-console.log(obj1 === obj2) // false
-console.log(obj1.key1 === obj2.key1) // true
-console.log(obj1.key1.key2.name, obj2.key1.key2.name) // 'Golang' 'Golang'
+console.log(obj1 === obj2); // false
+console.log(obj1.key1 === obj2.key1); // true
+console.log(obj1.key1.key2.name, obj2.key1.key2.name); // 'Golang' 'Golang'
 ```
 
 ```js
-const arr1 = [1, [2, [3]]]
+const arr1 = [1, [2, [3]]];
 
 // copies only the values of top level
 // this is a shallow copy
-const arr2 = [...arr1]
+const arr2 = [...arr1];
 // const arr2 = Object.assign([], arr1)
 
-arr2[0] = 78
-arr2[1][0] = 47
+arr2[0] = 78;
+arr2[1][0] = 47;
 
-console.log(arr1 === arr2) // false
-console.log(arr1[0] === arr2[0]) // false
-console.log(arr1[1] === arr2[1]) // true
-console.log(arr1, arr2) // [1, [47, [3]]] [78, [47, [3]]]
+console.log(arr1 === arr2); // false
+console.log(arr1[0] === arr2[0]); // false
+console.log(arr1[1] === arr2[1]); // true
+console.log(arr1, arr2); // [1, [47, [3]]] [78, [47, [3]]]
 ```
 
 ```js
@@ -651,10 +653,10 @@ const obj1 = {
     level: 2,
     key2: {
       level: 3,
-      name: 'Javascript'
-    }
-  }
-}
+      name: "Javascript",
+    },
+  },
+};
 
 // deep copy using spread operator
 const spreadDeepCopy = {
@@ -663,16 +665,16 @@ const spreadDeepCopy = {
     ...obj1.key1,
     key2: {
       ...obj2.key1.key2,
-      name: 'Golang'
-    }
-  }
-}
+      name: "Golang",
+    },
+  },
+};
 
 // deep copy using JSON parse & stringify
 // you can only use it when you copy objects with native JavaScript values
 // you will not be able to copy custom class instances
 // drawbacks, loose data structure dependencies, like, functions or circular dependencies
-const jsonDeepCopy = JSON.parse(JSON.stringify(obj1))
+const jsonDeepCopy = JSON.parse(JSON.stringify(obj1));
 ```
 
 </details>
@@ -693,8 +695,8 @@ JavaScript provides 3 ways to compare values:
 When comparing objects using any of the above, that is called referential equality.
 
 ```js
-const lang1 = { name: 'Javascript' }
-const lang2 = { name: 'Javascript' }
+const lang1 = { name: "Javascript" };
+const lang2 = { name: "Javascript" };
 
 lang1 === lang1; // => true
 lang1 === lang2; // => false
@@ -744,8 +746,8 @@ function deepEqual(object1, object2) {
     const val2 = object2[key];
     const areObjects = isObject(val1) && isObject(val2);
     if (
-      areObjects && !deepEqual(val1, val2) ||
-      !areObjects && val1 !== val2
+      (areObjects && !deepEqual(val1, val2)) ||
+      (!areObjects && val1 !== val2)
     ) {
       return false;
     }
@@ -753,7 +755,7 @@ function deepEqual(object1, object2) {
   return true;
 }
 function isObject(object) {
-  return object != null && typeof object === 'object';
+  return object != null && typeof object === "object";
 }
 ```
 
@@ -768,23 +770,23 @@ function isObject(object) {
 /**
  * arity = the number of arguments a function takes
  */
-const log = console.log
-const functionArity = (func) => func.length
+const log = console.log;
+const functionArity = (func) => func.length;
 
 function add(a, b = 1) {
-  log('arguments: ', arguments.length) // 4
+  log("arguments: ", arguments.length); // 4
 
-  const sum = a + b
-  console.log('sum: ', sum) // 3
+  const sum = a + b;
+  console.log("sum: ", sum); // 3
 
-  const argumentsSum = [...arguments].reduce((acc, val) => acc + val, 0)
-  console.log('argumentsSum: ', argumentsSum) // 10
+  const argumentsSum = [...arguments].reduce((acc, val) => acc + val, 0);
+  console.log("argumentsSum: ", argumentsSum); // 10
 }
 
-add(1, 2, 3, 4)
-log('arity: ', functionArity(add)) // 1, since b has a default value
+add(1, 2, 3, 4);
+log("arity: ", functionArity(add)); // 1, since b has a default value
 ```
-  
+
 </details>
 
 ## IFFE (Immediately Invoked Function Expression) <sup>[ref](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)</sup>
@@ -792,12 +794,12 @@ log('arity: ', functionArity(add)) // 1, since b has a default value
 <details>
 <summary>View contents</summary>
 
-__IFFE__ - runs as soon as it is defined.
+**IFFE** - runs as soon as it is defined.
 
 ```js
 (function () {
-  statements
-})()
+  statements;
+})();
 ```
 
 #### Use cases
@@ -822,23 +824,24 @@ __IFFE__ - runs as soon as it is defined.
 ```js
 // We would also use IIFE to create private and public variables and methods.
 
-const makeWithdraw = balance => (function(copyBalance) {
-  let balance = copyBalance; // This variable is private
-  let doBadThings = function() {
-    console.log("I will do bad things with your money");
-  };
-  doBadThings();
-  return {
-    withdraw: function(amount) {
-      if (balance >= amount) {
-        balance -= amount;
-        return balance;
-      } else {
-        return "Insufficient money";
-      }
-    },
-  }
-})(balance);
+const makeWithdraw = (balance) =>
+  (function (copyBalance) {
+    let balance = copyBalance; // This variable is private
+    let doBadThings = function () {
+      console.log("I will do bad things with your money");
+    };
+    doBadThings();
+    return {
+      withdraw: function (amount) {
+        if (balance >= amount) {
+          balance -= amount;
+          return balance;
+        } else {
+          return "Insufficient money";
+        }
+      },
+    };
+  })(balance);
 
 const firstAccount = makeWithdraw(100); // "I will do bad things with your money"
 console.log(firstAccount.balance); // undefined
@@ -847,7 +850,7 @@ console.log(firstAccount.withdraw(30)); // 50
 console.log(firstAccount.doBadThings); // undefined, this method is private
 const secondAccount = makeWithdraw(20); // "I will do bad things with your money"
 secondAccount.withdraw(30); // "Insufficient money"
-secondAccount.withdraw(20);  // 0
+secondAccount.withdraw(20); // 0
 ```
 
 </details>
@@ -870,114 +873,172 @@ secondAccount.withdraw(20);  // 0
 
 ```js
 function getNumber(num, cb) {
-  if(typeof num === 'number') {
-    cb(undefined, num * 2)
+  if (typeof num === "number") {
+    cb(undefined, num * 2);
   } else {
-    cb('Number must be provided.')
+    cb("Number must be provided.");
   }
 }
 
-getNumber(6, (err, data) => { // data: 12
-  if(err) {
-    console.log(err)
+getNumber(6, (err, data) => {
+  // data: 12
+  if (err) {
+    console.log(err);
   } else {
-    getNumber(data, (err, data) => { // data: 24
-      if(err) {
-        console.log(err)
+    getNumber(data, (err, data) => {
+      // data: 24
+      if (err) {
+        console.log(err);
       } else {
-        getNumber(data, (err, data) => { // data: 48
-          if(err) {
-            console.log(err)
+        getNumber(data, (err, data) => {
+          // data: 48
+          if (err) {
+            console.log(err);
           } else {
-            console.log(data)
+            console.log(data);
           }
-        })
+        });
       }
-    })
+    });
   }
-})
+});
 ```
 
 #### Promise
 
 ```js
 // ===================PROMISE===========================
-const getNumberPromise = num => new Promise((resolve, reject) => {
-  if(typeof num === 'number') {
-    resolve(num * 2)
-  } else {
-    reject('Number must be provided.')
-  }
-})
+const getNumberPromise = (num) =>
+  new Promise((resolve, reject) => {
+    if (typeof num === "number") {
+      resolve(num * 2);
+    } else {
+      reject("Number must be provided.");
+    }
+  });
 
 // Promise Chaining
 getNumberPromise(6)
-  .then(data => getNumberPromise(data)) // data: 12
-  .then(data => getNumberPromise(data)) // data: 24
-  .then(data => console.log(`Promise: ${data}`)) // data: 48
-  .catch(err => console.log(`Promise: ${err}`))
+  .then((data) => getNumberPromise(data)) // data: 12
+  .then((data) => getNumberPromise(data)) // data: 24
+  .then((data) => console.log(`Promise: ${data}`)) // data: 48
+  .catch((err) => console.log(`Promise: ${err}`));
 
 // async/await
 const processData = async () => {
   try {
-    let data = await getNumberPromise(6) // data: 12
-    data = await getNumberPromise(data) // data: 24
-    data = await getNumberPromise(data) // data: 48
-    console.log(data)
-  } catch(err) {
-    console.log(err)
+    let data = await getNumberPromise(6); // data: 12
+    data = await getNumberPromise(data); // data: 24
+    data = await getNumberPromise(data); // data: 48
+    console.log(data);
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
-processData()
+processData();
 ```
 
 #### Generator
 
 ```js
 function* generator() {
-  let num = yield 6 // num: 12
-  num = yield num // num: 24
-  num = yield num // num: 48
+  let num = yield 6; // num: 12
+  num = yield num; // num: 24
+  num = yield num; // num: 48
 
-  console.log(num)
+  console.log(num);
 }
 
-const gen = generator()
+const gen = generator();
 
 const handleGenerator = (yielded) => {
   if (!yielded.done) {
-    handleGenerator(gen.next(yielded.value * 2))
+    handleGenerator(gen.next(yielded.value * 2));
   }
-}
+};
 
-handleGenerator(gen.next())
+handleGenerator(gen.next());
 ```
 
 OR
 
 ```js
 const getNumberGen = (generator) => {
-  const gen = generator()
+  const gen = generator();
 
   function handle(yielded) {
-    if(!yielded.done) {
-      if(typeof yielded.value === 'number') {
-        handle(gen.next(yielded.value * 2))
+    if (!yielded.done) {
+      if (typeof yielded.value === "number") {
+        handle(gen.next(yielded.value * 2));
       }
     }
   }
 
-  return handle(gen.next())
-}
+  return handle(gen.next());
+};
 
 getNumberGen(function* () {
-  let num = yield 6 // num: 12
-  num = yield num // num: 24
-  num = yield num // num: 48
-  console.log(`Generator: ${num}`)
-})
+  let num = yield 6; // num: 12
+  num = yield num; // num: 24
+  num = yield num; // num: 48
+  console.log(`Generator: ${num}`);
+});
 ```
+
+</details>
+
+## Observers
+
+<details>
+<summary>View contents</summary>
+
+#### 1. MutationObserver
+
+#### 2. ResizeObserver
+
+#### 3. IntersectionObserver
+
+<details>
+<summary>View contents</summary>
+
+- provides a way to **asynchronously observe changes** in the _intersection_ of a target elemnt with an anchestor element or with a top-level document's viewport.
+- the ancestor element or viewport is reffered to as the root.
+- you can watch multiple target elements with the same observer.
+
+```js
+const options = {
+  // the bounding box
+  // the top-level document's viewport is used,
+  // if no root is passed or null
+  root: null,
+  // An offset rectangle applied to the root's bounding box
+  // px or %
+  rootMargin: "0px 0px 0px 0px",
+  // ratio of intersection area to bounding box area of an observed target
+  // default value is 0
+  threshold: 0.5, // callback will be executed when 50% of target is enter in bounding box
+};
+const observer = new IntersectionObserver((entries, observer) => {
+  // callback will be executed when target is entering or leaving the bounding box
+  entries.forEach((entry) => {
+    // If intersectionRatio is 0, the target is out of view
+    // and we do not need to do anything.
+    if (entry.intersectionRatio <= 0) return;
+
+    console.log(entry); // time, rootBounds, boundingClientRect, intersectionRect, isIntersecting, intersectionRatio, target
+
+    // stop observing a particular target element.
+    observer.unobserve(entry.target);
+  });
+}, options);
+const targetElement = document.querySelector(".btn");
+observer.observe(targetElement);
+```
+
+</details>
+
+#### 4. PerformanceObserver
 
 </details>
 
@@ -989,21 +1050,22 @@ getNumberGen(function* () {
 GET request (default)
 
 ```js
-const url = "https://jsonplaceholder.typicode/users/1"
+const url = "https://jsonplaceholder.typicode/users/1";
 fetch(url) // call the fetch function passing the url of the API as a parameter
-  .then(response => { // here we get a response (data) is an object with a series of methods
-    return response.json() // Transform the data into json
+  .then((response) => {
+    // here we get a response (data) is an object with a series of methods
+    return response.json(); // Transform the data into json
   })
-  .then(data => {
-    console.log(data) // json data
+  .then((data) => {
+    console.log(data); // json data
   })
-  .catch(err => {
+  .catch((err) => {
     // catch errors if the server returns any errors
-    console.log(err)
-  })
+    console.log(err);
+  });
 ```
 
-__Response methods__
+**Response methods**
 
 - clone() - As the method implies this method creates a clone of the response.
 - redirect() - This method creates a new response but with a different URL.
@@ -1016,41 +1078,46 @@ __Response methods__
 Fetch api wrapper function
 
 ```js
-const isObject = val => typeof val === 'object' && val !== null && !Array.isArray(val)
-  
+const isObject = (val) =>
+  typeof val === "object" && val !== null && !Array.isArray(val);
+
 /**
  * handle server request using fetch api
  * @param {string} url name of the api url
  * @param {string} methodName request method name
  * @param {string} data send data to server; datatype of data depends on api
  */
-const apiCall = async (url, methodName = 'GET', data = null) => {
+const apiCall = async (url, methodName = "GET", data = null) => {
   const fetchData = {
     method: methodName,
-    ...isObject(data) && { body: JSON.stringify(data) }, // add body property if data is an object
+    ...(isObject(data) && { body: JSON.stringify(data) }), // add body property if data is an object
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
     },
-  }
+  };
 
   try {
     // Handle response you get from the server
-    const data = await (await fetch(url, fetchData)).json()
-    return [data, null]
+    const data = await (await fetch(url, fetchData)).json();
+    return [data, null];
   } catch (err) {
     // Handle errors you get from the server
-    return [null, err]
+    return [null, err];
   }
-}
+};
 
-const data = { title: "foo", body: "bar", userId: 1 }
-const [data, err] = await apiCall("https://jsonplaceholder.typicode.com/posts", "POST", data)
-  
+const data = { title: "foo", body: "bar", userId: 1 };
+const [data, err] = await apiCall(
+  "https://jsonplaceholder.typicode.com/posts",
+  "POST",
+  data
+);
+
 if (err !== null) {
   // handle errors
 }
-  
-console.log(data)
+
+console.log(data);
 ```
 
 </details>
