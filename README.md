@@ -6,6 +6,8 @@
 
 ## [var, let, const and hoisting](https://github.com/foyez/js/tree/main/sections/variable-hoisting)
 
+## [Scoping](https://github.com/foyez/js/tree/main/sections/scoping)
+
 ## [Nullish coalescing operator (`??`), optional chaining operator (`?.`), logical OR (`||`) and Falsy](https://github.com/foyez/js/tree/main/sections/nullish-optional-chain-logical)
 
 ## [this, bind, call and apply](https://github.com/foyez/js/tree/main/sections/this-bind-call-apply)
