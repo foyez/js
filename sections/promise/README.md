@@ -74,24 +74,20 @@ init();
 
 ```js
 async function init() {
-  try {
-    const p1 = Promise.resolve("promise 1 fulfilled");
-    const p2 = Promise.reject("promise 2 rejected");
-    const p3 = Promise.resolve("promise 3 fulfilled");
+  const p1 = Promise.resolve("promise 1 fulfilled");
+  const p2 = Promise.reject("promise 2 rejected");
+  const p3 = Promise.resolve("promise 3 fulfilled");
 
-    const allResolved = await Promise.allSettled([p1, p2, p3]);
+  const allResolved = await Promise.allSettled([p1, p2, p3]);
 
-    console.log(allResolved);
-    /*
-    [
-      { status: 'fulfilled', value: 'promise 1 fulfilled' },
-      { status: 'rejected', reason: 'promise 2 rejected' },
-      { status: 'fulfilled', value: 'promise 3 fulfilled' }
-    ]
-    */
-  } catch (error) {
-    console.log(error);
-  }
+  console.log(allResolved);
+  /*
+  [
+    { status: 'fulfilled', value: 'promise 1 fulfilled' },
+    { status: 'rejected', reason: 'promise 2 rejected' },
+    { status: 'fulfilled', value: 'promise 3 fulfilled' }
+  ]
+  */
 }
 
 init();
