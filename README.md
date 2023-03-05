@@ -33,3 +33,5 @@
 ## [Observers](https://github.com/foyez/js/tree/main/sections/obserbers)
 
 ## [Fetch api](https://github.com/foyez/js/tree/main/sections/fetch-api)
+
+## [Promise](https://github.com/foyez/js/tree/main/sections/promise)
