@@ -107,7 +107,7 @@ async function init() {
     const p2 = new Promise((resolve) => setTimeout(resolve, 300, "promise2 fulfilled"));
     const p3 = new Promise((resolve) => setTimeout(resolve, 100, "promise3 fulfilled"));
 
-    const firstResolved = await Promise.race([p1, p2, p3]);
+    const firstResolved = await Promise.any([p1, p2, p3]);
 
     console.log(firstResolved); // promise3 fulfilled
   } catch (error) {
@@ -125,7 +125,7 @@ async function init() {
     const p2 = Promise.reject('promise2 rejected');
     const p3 = Promise.reject('promise3 rejected');
 
-    const firstResolved = await Promise.race([p1, p2, p3]);
+    const firstResolved = await Promise.any([p1, p2, p3]);
 
     console.log(firstResolved);
   } catch (error) {
